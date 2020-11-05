@@ -1,0 +1,17 @@
+<div class="container content">
+  <div class="row">
+    <h1> 
+      {{ title }}
+    </h1>
+  </div>
+
+  <app-destination-list></app-destination-list>
+
+  <form>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" type ="text" class="form-control" name="name" #name>
+    </div>
+  </form>
+  <button name="name" type="submit" class="btn btn-primary" (click)="add(name)">Enviar</button>
+</div>
