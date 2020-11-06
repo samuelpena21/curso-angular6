@@ -21,4 +21,8 @@ export class DestinationListComponent implements OnInit {
     return false;
   }
 
+  selected(d: TravelDestination){
+    this.destinations.forEach(function(x) {x.setSelected(false); });
+    d.setSelected(true);
+  }
 }

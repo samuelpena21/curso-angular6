@@ -25,6 +25,10 @@
     </div>
     <hr class="mb-5">
     <div class="row row-flex">
-        <app-travel-destination *ngFor="let d of destinations" [destination]="d" ></app-travel-destination>
+        <app-travel-destination 
+        *ngFor="let d of destinations"
+         [destination]="d"
+          (clicked)="selected($event)"
+         ></app-travel-destination>
     </div>
 </div>
