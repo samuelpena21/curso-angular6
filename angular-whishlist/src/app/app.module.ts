@@ -6,19 +6,26 @@ import { AppComponent } from './app.component';
 import { TravelDestinationComponent } from './travel-destination/travel-destination.component';
 import { DestinationListComponent } from './destination-list/destination-list.component';
 import { DestinationDetailsComponent } from './destination-details/destination-details.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormTravelDestinationComponent } from './form-travel-destination/form-travel-destination.component';
+import { DestinationApiClient } from './models/destination-api-client.model';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TravelDestinationComponent,
     DestinationListComponent,
-    DestinationDetailsComponent
+    DestinationDetailsComponent,
+    FormTravelDestinationComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ DestinationApiClient ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

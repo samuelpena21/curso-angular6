@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TravelDestination } from '../models/travel-destination.model';
+import { DestinationApiClient } from '../models/destination-api-client.model';
+
 
 @Component({
   selector: 'app-destination-list',
@@ -8,21 +10,22 @@ import { TravelDestination } from '../models/travel-destination.model';
 })
 export class DestinationListComponent implements OnInit {
 
-  destinations: TravelDestination[];
-  constructor() { 
-    this.destinations = [];
+  @Output() onItemAdded: EventEmitter<TravelDestination>
+
+  constructor(public destinationApiClient: DestinationApiClient) { 
+    this.onItemAdded = new EventEmitter();
   };
 
   ngOnInit(): void {}; 
 
-  save(name: string, url: string):boolean {
-    var destination = new TravelDestination(name, url);
-    this.destinations.push(destination)
-    return false;
+  saved(d: TravelDestination) {
+   this.destinationApiClient.add(d);
+   this.onItemAdded.emit(d);
+   console.log('launched event')
   }
 
   selected(d: TravelDestination){
-    this.destinations.forEach(function(x) {x.setSelected(false); });
+    this.destinationApiClient.getAll().forEach((x) => x.setSelected(false));
     d.setSelected(true);
   }
 }
