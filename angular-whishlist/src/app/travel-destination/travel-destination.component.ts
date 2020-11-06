@@ -9,6 +9,7 @@ import { TravelDestination } from '../models/travel-destination.model';
 export class TravelDestinationComponent implements OnInit {
 
   @Input() destination: TravelDestination;
+  @Input() position: number;
   @HostBinding('attr.class') cssClass = 'col-md-4'; 
   @Output() clicked: EventEmitter<TravelDestination>
 

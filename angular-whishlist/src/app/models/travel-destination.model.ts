@@ -1,7 +1,11 @@
 export class TravelDestination {
     
     private selected: boolean;
-    constructor(public name:string, public imageUrl:string){}
+    public services: string[];
+
+    constructor(public name:string, public imageUrl:string){
+        this.services = ['pool', 'breakfast'];
+    }
     isSelected() :boolean{
         return this.selected;
     }

@@ -2,15 +2,26 @@
         <div class="card-img">
             <img src="https://placeimg.com/380/230/nature" alt="">
             <span>
-                <h4>{{ destination.name }}</h4>
+                <h4>{{ position }}</h4>
             </span>
         </div>
         <div class="card-desc">
             <h3>{{ destination.name }}</h3>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor
-                quo, perspiciatis
-                voluptas totam</p>
+            <p>Services</p>
+            <ul>
+                <li *ngFor="let s of destination.services">
+                    <span [ngSwitch]="s">
+                        <i *ngSwitchCase="'breakfast'" style="color: rebeccapurple;"> {{s}} </i>
+                        <i *ngSwitchDefault> {{s}} </i>
+
+                        {{ s }}
+                    </span>
+                </li>
+            </ul>
             <a href="#" class="btn-card" (click)="go()">Go!</a>
-            <span [style.display]="destination.isSelected() ? '' : 'none'" >- Favorite -</span>
+            <span *ngIf="destination.isSelected()" >
+                <span ngNonBindable>- Favorite -</span>
+            
+            </span>
         </div>
 </div>
