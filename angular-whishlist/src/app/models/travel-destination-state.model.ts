@@ -39,6 +39,7 @@ export enum TravelsDestinationsActionsTypes {
     CHOOSEN_FAVORITE = '[Travels Destinations] FAVORITE',
     VOTE_UP = '[Travels Destinations] VOTE UP',
     VOTE_DOWN = '[Travels Destinations] VOTE DOWN',
+    RESET_VOTES ='[Travesls Destinatios] RESETS VOTES',
     INIT_MY_DATA = '[Travels Destinations] INIT MY DATA' 
 }
 
@@ -59,6 +60,13 @@ export class VoteUpAction implements Action {
 
 export class VoteDownAction implements Action {
     type = TravelsDestinationsActionsTypes.VOTE_DOWN;
+    constructor(public destination: TravelDestination){
+        
+    }
+}
+
+export class ResetVotesActions implements Action {
+    type = TravelsDestinationsActionsTypes.RESET_VOTES;
     constructor(public destination: TravelDestination){
         
     }
@@ -125,6 +133,11 @@ export function reducerTravelsDestinations(
             return { ...state };
         }
         
+        case TravelsDestinationsActionsTypes.RESET_VOTES: {
+            const dest: TravelDestination = (action as ResetVotesActions).destination;
+            dest.resetVotes();
+            return { ...state };
+        }
     }
     return state;
 }
