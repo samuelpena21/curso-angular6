@@ -115,13 +115,13 @@ export function reducerTravelsDestinations(
 
         case TravelsDestinationsActionsTypes.VOTE_UP: {
             const dest: TravelDestination = (action as VoteUpAction).destination;
-            // dest.voteUp();
+            dest.voteUp();
             return { ...state }; 
         }
 
         case TravelsDestinationsActionsTypes.VOTE_DOWN: {
             const dest: TravelDestination = (action as VoteDownAction).destination;
-            // dest.voteDown();
+            dest.voteDown();
             return { ...state };
         }
         

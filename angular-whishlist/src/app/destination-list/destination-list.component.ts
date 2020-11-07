@@ -15,6 +15,7 @@ export class DestinationListComponent implements OnInit {
 
   @Output() onItemAdded: EventEmitter<TravelDestination>
   updates: string[];
+  all;
   constructor(public destinationApiClient: DestinationApiClient, public store: Store<AppState>) { 
     this.onItemAdded = new EventEmitter();
     this.updates = [];
@@ -29,6 +30,7 @@ export class DestinationListComponent implements OnInit {
         this.updates.push("You have been choosen:" + d.name);
       }
     });
+    this.store.select(state => state.destination.items).subscribe(items => this.all = items);
   }; 
 
   saved(d: TravelDestination) {
@@ -40,5 +42,9 @@ export class DestinationListComponent implements OnInit {
   selected(d: TravelDestination){
     this.destinationApiClient.select(d);
     // this.store.dispatch(new ChoosenFavoriteAction(d))
+  }
+
+  getAll() {
+
   }
 }

@@ -6,7 +6,7 @@ export class TravelDestination {
     public services: string[];
     id = uuid();
 
-    constructor(public name:string, public imageUrl:string){
+    constructor(public name:string, public imageUrl:string, public votes: number =0){
         this.services = ['pool', 'breakfast'];
     }
     isSelected() :boolean{
@@ -14,5 +14,11 @@ export class TravelDestination {
     }
     setSelected(select: boolean){
         this.selected = select;
+    }
+    voteUp() {
+        this.votes++;
+    }
+    voteDown(){
+        this.votes--;
     }
 }
