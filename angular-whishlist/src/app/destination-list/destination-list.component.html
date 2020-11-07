@@ -22,4 +22,13 @@
           (clicked)="selected($event)"
          ></app-travel-destination>
     </div>
+    <hr class="mb-5">
+    <div class="row row-flex">
+        <h5>Activities</h5>
+        <ul>
+            <li *ngFor="let u of updates;"> 
+                {{u}} 
+            </li>
+        </ul>
+    </div>
 </div>

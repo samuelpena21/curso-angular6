@@ -5,12 +5,13 @@
         <label for="nombre">Nombre</label>
         <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre..."
          [formControl]="fg.controls['name']" >
+         <ul>
+             <li *ngFor="let r of searchResult;">{{ r }}</li>
+         </ul>
          <div *ngIf="fg.controls['name'].hasError('required')">The name is required</div>
          <div *ngIf="fg.controls['name'].hasError('invalidName')">Invalid name, please check</div>
          <div *ngIf="fg.controls['name'].hasError('minLongName')">The name needs to have at least 
              {{minLong}} characters long</div>
-
-
     </div>
     <div class="form-group">
         <label for="Imagen Url">Imagen Url</label>

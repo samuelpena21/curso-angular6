@@ -1,6 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TravelDestination } from '../models/travel-destination.model';
 import { DestinationApiClient } from '../models/destination-api-client.model';
+import { AppState } from '../app.module';
+import { select, Store } from '@ngrx/store';
+import { ChoosenFavoriteAction, NewDestinationAction } from '../models/travel-destination-state.model'
 
 
 @Component({
@@ -11,21 +14,31 @@ import { DestinationApiClient } from '../models/destination-api-client.model';
 export class DestinationListComponent implements OnInit {
 
   @Output() onItemAdded: EventEmitter<TravelDestination>
-
-  constructor(public destinationApiClient: DestinationApiClient) { 
+  updates: string[];
+  constructor(public destinationApiClient: DestinationApiClient, public store: Store<AppState>) { 
     this.onItemAdded = new EventEmitter();
+    this.updates = [];
+  
   };
 
-  ngOnInit(): void {}; 
+  ngOnInit(): void {
+    this.store.select(state => state.destination)
+    .subscribe(data => {
+      let d = data.favorite;
+      if(d != null) {
+        this.updates.push("You have been choosen:" + d.name);
+      }
+    });
+  }; 
 
   saved(d: TravelDestination) {
    this.destinationApiClient.add(d);
    this.onItemAdded.emit(d);
-   console.log('launched event')
+  //  this.store.dispatch(new NewDestinationAction(d))
   }
 
   selected(d: TravelDestination){
-    this.destinationApiClient.getAll().forEach((x) => x.setSelected(false));
-    d.setSelected(true);
+    this.destinationApiClient.select(d);
+    // this.store.dispatch(new ChoosenFavoriteAction(d))
   }
 }

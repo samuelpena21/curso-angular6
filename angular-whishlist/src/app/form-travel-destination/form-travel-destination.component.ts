@@ -1,5 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
+import { fromEvent } from 'rxjs';
+import { map, filter, debounceTime, distinctUntilChanged,switchMap } from 'rxjs/operators';
+import { ajax, AjaxResponse } from 'rxjs/ajax';
+
+
 import { TravelDestination } from '../models/travel-destination.model';
 
 @Component({
@@ -12,6 +17,7 @@ export class FormTravelDestinationComponent implements OnInit {
   @Output() onItemAdded: EventEmitter<TravelDestination>;
   fg: FormGroup;
   minLong = 3;
+  searchResult: string[];
 
   constructor(fb: FormBuilder) { 
     this.onItemAdded = new EventEmitter();
@@ -29,6 +35,16 @@ export class FormTravelDestinationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let elemName = <HTMLInputElement>document.getElementById('name'); //Elegimos el elemento del html
+    //subscribirno cuando nos presionan tecla
+    fromEvent(elemName, 'input') //Pipe sirve para operaciones en serie
+      .pipe(
+          map((e: KeyboardEvent) => (e.target as HTMLInputElement).value), //Cada evento del teclado tiene un target
+          filter(text => text.length > 2), //Entra ese string si tiene más de 2 caracteres
+          debounceTime(200),
+          distinctUntilChanged(),
+          switchMap((text: string) => ajax('/assets/data.json'))
+        ).subscribe(ajaxResponse => this.searchResult = ajaxResponse.response);
   }
 
   save(name: string, url: string): boolean {
