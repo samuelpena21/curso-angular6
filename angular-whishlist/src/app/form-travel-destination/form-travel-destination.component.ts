@@ -44,11 +44,17 @@ export class FormTravelDestinationComponent implements OnInit {
           debounceTime(200),
           distinctUntilChanged(),
           switchMap((text: string) => ajax('/assets/data.json'))
-        ).subscribe(ajaxResponse => this.searchResult = ajaxResponse.response);
+        ).subscribe(ajaxResponse => {
+          this.searchResult = ajaxResponse.response
+          .filter(function(x){
+            return x.toLowerCase().includes(elemName.value.toLowerCase());
+          });
+        });
+          
   }
 
   save(name: string, url: string): boolean {
-    const d = new TravelDestination(name, url);
+    let d = new TravelDestination(name, url);
     this.onItemAdded.emit(d);
     return false;
   }
